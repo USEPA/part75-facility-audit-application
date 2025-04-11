@@ -780,6 +780,30 @@
         "Built": "R 4.4.1; ; 2024-09-07 02:06:07 UTC; windows"
       }
     },
+    "shinydashboard": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "shinydashboard",
+        "Title": "Create Dashboards with 'Shiny'",
+        "Version": "0.7.2",
+        "Authors@R": "c(\n    person(\"Winston\", \"Chang\", role = c(\"aut\", \"cre\"), email = \"winston@rstudio.com\"),\n    person(\"Barbara\", \"Borges Ribeiro\", role = \"aut\", email = \"barbara@rstudio.com\"),\n    person(family = \"RStudio\", role = \"cph\"),\n    person(family = \"Almasaeed Studio\", role = c(\"ctb\", \"cph\"), comment = \"AdminLTE theme for Bootstrap\"),\n    person(family = \"Adobe Systems Incorporated\", role = c(\"ctb\", \"cph\"), comment = \"Source Sans Pro font\")\n    )",
+        "Description": "Create dashboards with 'Shiny'. This package provides\n    a theme on top of 'Shiny', making it easy to create attractive dashboards.",
+        "URL": "http://rstudio.github.io/shinydashboard/",
+        "Depends": "R (>= 3.0)",
+        "License": "GPL (>= 2) | file LICENSE",
+        "Imports": "utils, shiny (>= 1.0.0), htmltools (>= 0.2.6), promises",
+        "BugReports": "https://github.com/rstudio/shinydashboard",
+        "RoxygenNote": "6.0.1.9000",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-09-29 17:40:23 UTC; winston",
+        "Author": "Winston Chang [aut, cre],\n  Barbara Borges Ribeiro [aut],\n  RStudio [cph],\n  Almasaeed Studio [ctb, cph] (AdminLTE theme for Bootstrap),\n  Adobe Systems Incorporated [ctb, cph] (Source Sans Pro font)",
+        "Maintainer": "Winston Chang <winston@rstudio.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2021-09-30 12:10:06 UTC",
+        "Built": "R 4.4.2; ; 2024-12-21 03:38:57 UTC; windows"
+      }
+    },
     "sourcetools": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -863,7 +887,7 @@
   },
   "files": {
     "app.R": {
-      "checksum": "50e5523a2d1537055edbff6954f5ff77"
+      "checksum": "7299fdc540e8460c9c9fc3e409696579"
     },
     "LICENSE": {
       "checksum": "ef57c29679cac78958038c152be24cfb"
