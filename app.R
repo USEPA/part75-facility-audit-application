@@ -1,51 +1,47 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
+# Shiny Dashboard
 
+# Load required packages
+library(shinydashboard)
 library(shiny)
 
-# Define UI for application that draws a histogram
-ui <- fluidPage(
-
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-    ),
-
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("distPlot")
+# Create shiny dashboard UI
+ui <- dashboardPage(
+  dashboardHeader(title = "Shiny Dashboard"),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Data Table", tabName = "dataTable", icon = icon("table")),
+      menuItem("Plot", tabName = "plot", icon = icon("chart-bar"))
+    )
+  ),
+  dashboardBody(
+    tabItems(
+      tabItem(tabName = "dataTable",
+              h2("Data Table"),
+              tableOutput("dataTable")
+      ),
+      tabItem(tabName = "plot",
+              h2("Plot"),
+              plotOutput("plot")
+      )
     )
   )
 )
-
-# Define server logic required to draw a histogram
+# Create shiny server
 server <- function(input, output) {
+  # Sample data
+  data <- data.frame(
+    x = rnorm(100),
+    y = rnorm(100)
+  )
 
-  output$distPlot <- renderPlot({
-    # generate bins based on input$bins from ui.R
-    x    <- faithful[, 2]
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+  # Render data table
+  output$dataTable <- renderTable({
+    head(data)
+  })
 
-    # draw the histogram with the specified number of bins
-    hist(x, breaks = bins, col = 'darkgray', border = 'white',
-         xlab = 'Waiting time to next eruption (in mins)',
-         main = 'Histogram of waiting times')
+  # Render plot
+  output$plot <- renderPlot({
+    plot(data$x, data$y, main = "Scatter Plot", xlab = "X-axis", ylab = "Y-axis")
   })
 }
 
-# Run the application
-shinyApp(ui = ui, server = server)
