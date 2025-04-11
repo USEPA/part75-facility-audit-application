@@ -29,10 +29,7 @@ ui <- dashboardPage(
 # Create shiny server
 server <- function(input, output) {
   # Sample data
-  data <- data.frame(
-    x = rnorm(100),
-    y = rnorm(100)
-  )
+  data <- read.csv(paste0(getwd(),"/csv-files/test.csv"))
 
   # Render data table
   output$dataTable <- renderTable({
