@@ -6,7 +6,7 @@ library(shiny)
 
 # Create shiny dashboard UI
 ui <- dashboardPage(
-  dashboardHeader(title = "Shiny Dashboard"),
+  dashboardHeader(title = "Dashboard"),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Data Table", tabName = "dataTable", icon = icon("table")),
@@ -29,6 +29,7 @@ ui <- dashboardPage(
 # Create shiny server
 server <- function(input, output) {
   # Sample data
+  # change
   data <- read.csv(paste0(getwd(),"/csv-files/test.csv"))
 
   # Render data table
