@@ -4,7 +4,10 @@ library(tidyverse)
 library(lubridate)
 library(dotenv)
 
-load_dot_env(".env")
+# if there's a .env file, load it
+if (file.exists(".env")) {
+  load_dot_env(".env")
+}
 
 # API info
 apiUrlBase <- "https://api.epa.gov/easey/beta"
