@@ -5,9 +5,17 @@ library(shinydashboard)
 library(shiny)
 library(plotly)
 library(DT)
+library(dotenv)
+
+# if there's a .env file, load it
+if (file.exists(".env")) {
+  load_dot_env(".env")
+}
 
 # Load API-calls.R file
-source("API-beta-calls.R")
+source("API-beta-calls-fc.R")
+source("API-beta-calls-mp.R")
+source("API-beta-calls-em.R")
 
 # Function to check for errors and warnings
 check <- function(expression){
