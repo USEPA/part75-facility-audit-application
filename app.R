@@ -50,6 +50,8 @@ ui <- dashboardPage(
     includeCSS("www/styles.css"),
     tabItems(
       tabItem(tabName = "dataTable",
+              h2("Facility List"),
+              DT::DTOutput("facilityDataTable"),
               h2("Monitoring Plan"),
               # Pick an Oris Code to view
               numericInput("orisCode", "Select ORIS Code:", value = 3, min = 1, max = 880110, step = 1),
@@ -58,13 +60,49 @@ ui <- dashboardPage(
               # Display facility name
               h3(textOutput("facilityNameDisplay")),
               # Data table output
-              DT::DTOutput("dataTable")
+              DT::DTOutput("monPlanDataTable")
       )
     )
   )
 )
 # Shiny server
 server <- function(input, output) {
+
+  opYear <- 2023 # set the operating year
+
+  # Fetch the list of applicable facilities for the given operating year
+  # reduce data to only include the columns of interest
+  # remove duplicates
+  # merge with state codes to get the state name
+  applicableFacilities <- get_facilities_applicable(opYear) %>%
+    select(facilityId,stateCode) %>%
+    distinct() %>%
+    left_join(get_state_codes(), by = c("stateCode" = "stateCode")) %>%
+    select(facilityId,stateCode,stateName, epaRegion)
+
+  # Render the facility data table
+  output$facilityDataTable <- DT::renderDataTable({
+    applicableFacilities
+  }, filter = "top", rownames= FALSE,
+  options = list(
+    scrollX = TRUE, # Enable horizontal scrolling
+    scrollY = "400px" # Set vertical scroll height
+  ))
+
+  # Observe changes in selected rows
+  observeEvent(input$facilityDataTable_rows_selected, {
+    selected_rows <- input$facilityDataTable_rows_selected
+
+    # Now you can use the selected_rows vector to perform actions
+    # For example, filter your data to show only selected rows:
+    if (length(selected_rows) > 0) {
+      selected_data <- applicableFacilities[selected_rows, ]
+      print(selected_data)
+      # Do something with selected_data
+    } else {
+      # Handle the case where no rows are selected
+    }
+  })
 
   monitorPlanData <- data.frame()  # Initialize an empty data frame for monitor plan data
 
@@ -94,9 +132,9 @@ server <- function(input, output) {
     monitorPlanData <<- get_monitoring_plan_configurations(c(input$orisCode))
 
     # Render data table
-    output$dataTable <- DT::renderDataTable({
+    output$monPlanDataTable <- DT::renderDataTable({
       monitorPlanData
-    },
+    }, filter = "top",
     options = list(
       scrollX = TRUE, # Enable horizontal scrolling
       scrollY = "400px" # Set vertical scroll height
